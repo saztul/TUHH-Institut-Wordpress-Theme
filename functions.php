@@ -93,8 +93,16 @@ add_action( 'widgets_init', 'tuhh_institute_widgets_init' );
  */
 function tuhh_institute_scripts() {
 	wp_enqueue_style( 'tuhh-institute-style', get_stylesheet_uri() );
+	wp_enqueue_style( 'tuhh-institute-imported-style', get_template_directory_uri() . '/static/application-da92feeab726f7664b36f44894a37c53.css' );
+    
 
-    // wp_enqueue_script( 'tuhh-institute-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
+    wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/static/assets/modernizr.js', array(), '20140815', true );
+    wp_enqueue_script( 'tuhh-jquery-next-or-first', get_template_directory_uri() . '/js/jQuery_next_or_first.js', array('jquery'), '20140815', true );
+    wp_enqueue_script( 'tuhh-institute-navigation-loader', get_template_directory_uri() . '/js/navigation-loader.js', array('jquery'), '20140815', true );
+    wp_enqueue_script( 'tuhh-institute-mobile-navigation', get_template_directory_uri() . '/js/mobile-navigation.js', array('jquery', 'tuhh-institute-navigation-loader'), '20140815', true );
+    wp_enqueue_script( 'tuhh-institute-search-panel', get_template_directory_uri() . '/js/search-panel.js', array('jquery'), '20140815', true );
+    wp_enqueue_script( 'tuhh-institute-svg-fallback', get_template_directory_uri() . '/js/svg-fallback.js', array('jquery'), '20140815', true );
+    wp_enqueue_script( 'tuhh-institute-teaser', get_template_directory_uri() . '/js/teaser.js', array('jquery', 'modernizr'), '20140815', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
