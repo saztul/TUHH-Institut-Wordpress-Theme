@@ -5,6 +5,12 @@
  * @package TUHH Institute
  */
 
+require get_template_directory() . '/inc/abstract_tuhh_walker.php';
+require get_template_directory() . '/inc/top-menu-walker.php';
+require get_template_directory() . '/inc/side-menu-walker.php';
+require get_template_directory() . '/inc/sunwalker.php';
+
+
 /**
  * Set the content width based on the theme's design and stylesheet.
  */
@@ -80,9 +86,9 @@ function tuhh_institute_widgets_init() {
 		'name'          => __( 'Sidebar', 'tuhh-institute' ),
 		'id'            => 'sidebar-1',
 		'description'   => '',
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</aside>',
-		'before_title'  => '<h1 class="widget-title">',
+		'before_widget' => '<section id="%1$s" class="box widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h1 class="widget-title box-title">',
 		'after_title'   => '</h1>',
 	) );
 }
@@ -109,6 +115,55 @@ function tuhh_institute_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'tuhh_institute_scripts' );
+
+function tuhh_breadcrumbs() {
+    $CPtheFullUrl = $_SERVER["REQUEST_URI"];
+    $CPurlArray=explode("/",$CPtheFullUrl);
+    $parts = array();
+    $parts[] = '<a href="/">Home</a>';
+    while (list($CPj,$CPtext) = each($CPurlArray)) {
+        $CPdir='';
+        if ($CPj > 1) {
+            $CPi=1;
+            while ($CPi < $CPj) {
+                $CPdir .= '/' . $CPurlArray[$CPi];
+                $CPtext = $CPurlArray[$CPi];
+                $CPi++;
+            }
+            if($CPj < count($CPurlArray)-1) echo ' <a href="'.$CPdir.'">' . str_replace("-", " ", $CPtext) . '</a>';
+        }
+    }
+    // $parts[] = "<span>"; wp_title("")."</span>";
+    echo implode('path-sep ', $parts);
+}
+
+function tuhh_top_menu(){
+    echo TUHH_Navigation::get_instance()->top_navigation();
+}
+
+function tuhh_side_menu(){
+    echo TUHH_Navigation::get_instance()->sidebar_navigation();
+}
+
+/**
+ * Wordpress ignores container options for page menus
+ * converting <div><ul> to <nav><menu>
+ * @see wordpress/wp-includes/post-template.php: wp_page_menu()
+ */
+function tuhh_fix_wp_menu_derp($menu, $id, $class, $container, $menu_tag){
+    if(substr($menu, 0, 4) == '<div'){
+        $menu = preg_replace(
+            '/^<div class="([^"]*)"><ul>/mui', 
+            "<$container id=\"$id\" class=\"$class $1\"><$menu_tag>",
+            $menu
+        );
+        $menu = substr($menu, 0, -12)."</$menu_tag></$container>\n";
+    }
+    else{
+        $menu = preg_replace('/<\/?ul[^>]*>/mui', '', $menu);
+    }
+    echo $menu;
+}
 
 /**
  * Implement the Custom Header feature.

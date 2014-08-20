@@ -28,8 +28,10 @@
       
     </div>
   </nav>
+  
   <div id="page">
     <div id="layout">
+      
       <nav id="phantom">
         <ul>
           <li><a href="#top-navigation">Hauptnavigation</a></li>
@@ -38,6 +40,7 @@
           <li><a href="#search" id="phantom-search-link">Suche</a></li>
         </ul>
       </nav>
+      
       <header id="page-header">
         <a href="http://www.tuhh.de" id="tuhh-logo" title="Zur TUHH Webseite">
           <div id="tuhh-logo-group">
@@ -60,7 +63,7 @@
     
     
       <section id="navigation-bar">
-        <a id="search-link" href="/bitte-url-zur-suche-hier=eintragen" title="Suchformular anzeigen"><img src="/assets/filter.png" alt="Suchformular anzeigen" /></a>
+        <a id="search-link" href="/bitte-url-zur-suche-hier=eintragen" title="Suchformular anzeigen"><img src="<?php echo get_template_directory_uri(); ?>/static/assets/filter.png" alt="Suchformular anzeigen" /></a>
         <form method="get" action="?" id="search-panel">
           <a class=anchor name="search" title="Suche"></a>
           <label for="search-field">Webseite durchsuchen</label>
@@ -73,33 +76,7 @@
           </span>
         </nav>
         <a class=anchor name="top-navigation" title="Hauptnavigation"></a>
-        <nav id="top-navigation" class="main-navigation">
-          <ul data-debuginfo="topmenu" data-delegate="sidebar-navigation">
-            <li><a data-submenu="institut-submenu" href="/">Institut</a></li>
-            <li><a data-submenu="forschung-submenu" href="/">Forschung</a></li>
-            <li><a data-submenu="lehre-submenu" href="/">Lehre</a></li>
-            <li><a data-submenu="publikationen-submenu" href="/">Publikationen</a></li>
-            <li><a data-submenu="aktuelles-submenu" href="/">Aktuelles</a></li>
-            <li><a data-submenu="kontakt-submenu" href="/">Kontakt</a></li>
-          </ul>
-        </nav>
+        <?php tuhh_top_menu(); ?>
       </section>
     
     
-    
-<div id="page" class="hfeed site">
-	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'tuhh-institute' ); ?></a>
-
-	<header id="masthead" class="site-header" role="banner">
-		<div class="site-branding">
-			<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
-		</div>
-
-		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<button class="menu-toggle"><?php _e( 'Primary Menu', 'tuhh-institute' ); ?></button>
-			<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
-		</nav><!-- #site-navigation -->
-	</header><!-- #masthead -->
-
-	<div id="content" class="site-content">
