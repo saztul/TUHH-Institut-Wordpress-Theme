@@ -3,20 +3,6 @@ class TUHH_Navigation extends Walker{
     private $root;
     private $scope;
 
-    // tuhh functions
-    
-    public function top_menu(){
-        
-    }
-    
-    public function side_menus(){
-        
-    }
-    
-    public function breadcrumbs(){
-        
-    }
-    
     // singleton
     
     private static $instance;
@@ -81,6 +67,10 @@ class TUHH_Navigation extends Walker{
     
     public function sidebar_navigation(){
         return $this->root->render_side_nav();
+    }
+    
+    public function breadcrumbs(){
+        return $this->root->render_breadcrumbs();
     }
 }
 
@@ -203,6 +193,16 @@ class TUHH_Nav_Item{
     public function render_side_nav(){
         return $this->render_children();
     }
+    
+    public function render_breadcrumbs($upper_crumbs = array()){
+        $upper_crumbs[] = $this->render_self();
+        if($this->contains_selected_in !== null){
+            return $this->contains_selected_in->render_breadcrumbs($upper_crumbs);
+        }
+        else{
+            return $upper_crumbs;
+        }
+    }
 }
 
 class TUHH_Nav_Root extends TUHH_Nav_Item{
@@ -229,6 +229,14 @@ class TUHH_Nav_Root extends TUHH_Nav_Item{
             $out .= $child->render_side_nav();
         }
         return $out.'</nav>';
+    }
+    
+    public function render_breadcrumbs(){
+        $crumbs = array();
+        if($this->contains_selected_in !== null){
+            $crumbs = $this->contains_selected_in->render_breadcrumbs();
+        }
+        return implode('<span class="path-sep"> &gt; </span>', $crumbs);
     }
     
     public function __toString(){
