@@ -5,9 +5,6 @@
  * @package TUHH Institute
  */
 
-require get_template_directory() . '/inc/abstract_tuhh_walker.php';
-require get_template_directory() . '/inc/top-menu-walker.php';
-require get_template_directory() . '/inc/side-menu-walker.php';
 require get_template_directory() . '/classes/TUHH_Nav_Item.php';
 require get_template_directory() . '/classes/TUHH_Nav_Root.php';
 require get_template_directory() . '/classes/TUHH_Navigation.php';
