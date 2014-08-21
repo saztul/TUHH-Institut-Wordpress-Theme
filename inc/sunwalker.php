@@ -85,12 +85,16 @@ class TUHH_Nav_Item{
     protected $child_of_selected = false;
     
     public function __construct($wp_data){
-        $this->wp_data = $wp_data;
+        $this->wp_data = new TUHH_WP_Data_Wrapper($wp_data);
     }
     
     public function get_id(){
-        return intval($this->wp_data->ID);
+        return $this->wp_data->get_id();
     }
+    
+    ////////////////////
+    // manage selections
+    ////////////////////
     
     public function propage_selection(){
         $this->is_selected = true;
@@ -101,7 +105,7 @@ class TUHH_Nav_Item{
     }
         
     public function query_selection(){
-        if($this->wp_data->current){
+        if($this->wp_data->is_selected()){
             $this->propage_selection();
             return true;
         }
@@ -122,6 +126,10 @@ class TUHH_Nav_Item{
         $this->child_of_selected = true;
     }
     
+    ////////////////////
+    // organize as tree
+    ////////////////////
+    
     protected function append_child(TUHH_Nav_Item $child){
         $this->children[] = $child;
         $child->accept_parent($this);
@@ -132,62 +140,70 @@ class TUHH_Nav_Item{
     }
     
     public function assemble($map){
-        if(isset($this->wp_data->menu_item_parent)){
-            $parent_id = intval($this->wp_data->menu_item_parent);
-            if(isset($map[$parent_id])){
-                $map[$parent_id]->append_child($this);
-            }
+        $parent_id = $this->wp_data->parent_id();
+        if(isset($map[$parent_id])){
+            $map[$parent_id]->append_child($this);
         }
     }
 
+    ////////////////////
+    // render helpers
+    ////////////////////
+    // -> move to wp data?
+
+    protected function list_classes(){
+        $classes = [];
+        if($this->contains_selected_in !== null || $this->is_selected) {
+            $classes[] = 'contains-selected'; }
+        return ' class="'.implode(' ', $classes).'" ';
+    }
+
+    protected function item_classes(){
+        $classes = [];
+        if($this->contains_selected_in !== null) {
+            $classes[] = 'parent-of-selected'; }
+        if($this->is_selected){
+            $classes[] = 'selected'; }
+        return ' class="'.implode(' ', $classes).'" ';
+    }
+
+    /////////////////////
+    // internal renderers
+    /////////////////////
+
     protected function render_self(){
-        $item = $this->wp_data;
-		$atts = array();
-		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
-		$atts['target'] = ! empty( $item->target )     ? $item->target     : '';
-		$atts['rel']    = ! empty( $item->xfn )        ? $item->xfn        : '';
-		$atts['href']   = ! empty( $item->url )        ? $item->url        : '';
-		$atts['class']   = $this->is_selected        ? 'selected'        : '';
+        return strval($this->wp_data);
+    }
 
-		$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args );
-
-		$attributes = '';
-		foreach ( $atts as $attr => $value ) {
-			if ( ! empty( $value ) ) {
-				$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
-				$attributes .= ' ' . $attr . '="' . $value . '"';
-			}
-		}
-        
-		$item_output ='<a'. $attributes .'>';
-		$item_output .= apply_filters( 'the_title', $item->title, $item->ID );
-		$item_output .= '</a>';
-        return $item_output;
+    protected function contains_selected(){
+        return $this->contains_selected_in !== null || $this->is_selected;
     }
 
     protected function render_children(){
         $out = '';
         if(count($this->children)){
-            $sel = ($this->contains_selected_in !== null || $this->is_selected) ? ' class="contains-selected"' : '';
-            $out .= "<ul".$sel.">";
+            $out .= "<ul".$this->list_classes()." id=\"children-of-".$this->get_id()."\">";
             foreach($this->children as $child){
-                $out .= strval($child);
+                $out .= $child->render_item();
             }
             $out .= "</ul>";
         }
         return $out;
     }
 
-    public function __toString(){       
-        $out = "<li>";
-        $out .= $this->render_self();
-        $out .= $this->render_children();
-        $out .= "</li>";
-        return $out;
+    protected function render_item(){       
+        return "<li".$this->item_classes().">".
+                    $this->render_self().
+                    $this->render_children().
+                "</li>";
     }
     
+    /////////////////////
+    // external renderers
+    /////////////////////
+    
     public function render_top_nav(){
-        return "<li>".$this->render_self()."</li>";
+        return "<li".$this->item_classes().">".$this->render_self()."</li>";
     }
     
     public function render_side_nav(){
@@ -215,20 +231,19 @@ class TUHH_Nav_Root extends TUHH_Nav_Item{
     }
     
     public function render_top_nav(){
-        $out = "<nav id=\"top-navigation\" class=\"main-navigation\"><ul data-delegate=\"sidebar-navigation\" class=\"contains-selected\">";
+        $out = "";
         foreach($this->children as $child){
             $out .= $child->render_top_nav();
         }
-        $out .= "</ul></nav>";
-        return $out;
+        return '<nav id="top-navigation" class="main-navigation"><ul data-delegate="sidebar-navigation">'.$out.'</ul></nav>';
     }
 
     public function render_side_nav(){
-        $out = '<nav id="sidebar-navigation" class="main-navigation">';
+        $out = '';
         foreach($this->children as $child){
             $out .= $child->render_side_nav();
         }
-        return $out.'</nav>';
+        return '<nav id="sidebar-navigation" class="main-navigation">'.$out.'</nav>';
     }
     
     public function render_breadcrumbs(){
@@ -244,98 +259,46 @@ class TUHH_Nav_Root extends TUHH_Nav_Item{
     }
 }
 
+class TUHH_WP_Data_Wrapper{
+    protected $wp_data;
+    
+    public function __construct($wp_data){
+        $this->wp_data = $wp_data;
+    } 
 
+    public function get_id(){
+        return intval($this->wp_data->ID);
+    }
+    
+    public function is_selected(){
+        return $this->wp_data->current;
+    }
+    
+    public function parent_id(){
+        if(isset($this->wp_data->menu_item_parent)){
+            return intval($this->wp_data->menu_item_parent);
+        }
+        else return 0;
+    }
+    
+    public function __toString(){
+        $item = $this->wp_data;
+		$atts = array();
+		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
+		$atts['target'] = ! empty( $item->target )     ? $item->target     : '';
+		$atts['rel']    = ! empty( $item->xfn )        ? $item->xfn        : '';
+		$atts['href']   = ! empty( $item->url )        ? $item->url        : '';
+		$atts['class']   = $this->is_selected()        ? 'selected'        : '';
 
+		$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args );
 
-// class TUHH_Nav_Item{
-//     protected $children = array();
-//     protected $parent;
-//     protected $is_child_of_selected = false;
-//     protected $is_parent_of_selected = false;
-//     protected $is_selected = false;
-//
-//     public function __construct($item, $args){
-//
-//     }
-//
-//     public function select(){
-//         $this->parent->parent_of_selected($this, array($this));
-//         $this->is_selected = true;
-//         array_map($this->children, function($child){
-//             $child->child_of_selected();
-//         });
-//     }
-//
-//     public function append_child(TUHH_Nav_Item $child){
-//         $child->set_parent($this);
-//         $this->children[] = $child;
-//     }
-//
-//     public function last_child(){
-//         if(count($this->children)){
-//             return $this->children[count($this->children) - 1];
-//         }
-//         else return $this;
-//     }
-//
-//     protected function set_parent(TUHH_Nav_Item $parent){
-//         $this->parent = $parent;
-//     }
-//
-//     // for menu walker
-//     public function get_parent(){
-//         return $this->parent;
-//     }
-//
-//     protected function parent_of_selected(TUHH_Nav_Item $selected, array $branch){
-//         $this->is_parent_of_selected = true;
-//         $this->parent->parent_of_selected($selected, array_merge(array($this), $branch));
-//     }
-//
-//     protected function child_of_selected(){
-//         $this->is_child_of_selected = true;
-//     }
-//
-//     public function get_selected_branch($ancestors = array()){
-//         $ancestors[] = $this;
-//         if($this->branch_with_selection){
-//             $ancestors = $this->branch_with_selection->get_selected_branch($ancestors);
-//         }
-//         return $ancestors;
-//     }
-// }
-//
-// class TUHH_Nav_Root extends TUHH_Nav_Item{
-//     protected $selected;
-//     protected $selected_branch;
-//
-//     public function select(){
-//     }
-//
-//     protected function set_parent(){
-//     }
-//
-//     public function get_parent(){
-//         return $this;
-//     }
-//
-//     protected function parent_of_selected(TUHH_Nav_Item $selected, $selected_branch){
-//         $this->selected_branch = $selected_branch;
-//         $this->selected = $selected;
-//     }
-//
-//     protected function child_of_selected(){
-//     }
-//
-//     public function get_selected_branch(){
-//         return $this->selected_branch;
-//     }
-//
-//     public function get_selected(){
-//         return $this->selected;
-//     }
-//
-//
-// }
-
-?>
+		$attributes = '';
+		foreach ( $atts as $attr => $value ) {
+			if ( ! empty( $value ) ) {
+				$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+				$attributes .= ' ' . $attr . '="' . $value . '"';
+			}
+		}
+        return '<a'.$attributes." data-submenu=\"children-of-".$this->get_id()."\">".apply_filters( 'the_title', $item->title, $item->ID ).'</a>';
+    }
+}
