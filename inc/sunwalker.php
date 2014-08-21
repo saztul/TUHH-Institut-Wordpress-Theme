@@ -16,9 +16,6 @@ class TUHH_Navigation extends Walker{
     }
     
     protected function __construct(){
-        $this->root = new TUHH_Nav_Root;
-        $this->last_added = $this->root;
-        $this->scope = $this->root;
     }
     
     private function __clone(){
@@ -35,10 +32,9 @@ class TUHH_Navigation extends Walker{
     
     public function walk($elements, $max_depth, $args = array()){
         $this->root = new TUHH_Nav_Root;
-        echo "<script> DARP = ";
-        echo json_encode($elements);
-        echo "</script>";
-        
+        $this->last_added = $this->root;
+        $this->scope = $this->root;
+    
         $wrapped = array();
         foreach($elements as $element){
             $wrapped[] = new TUHH_Nav_Item($element);
@@ -120,6 +116,7 @@ class TUHH_Nav_Item{
     protected function select_branch(TUHH_Nav_Item $child){
         $this->contains_selected_in = $child;
         $this->parent->select_branch($this);
+        $this->wp_data->set_parent();
     }
     
     protected function parent_is_selected(){
@@ -222,10 +219,20 @@ class TUHH_Nav_Item{
 }
 
 class TUHH_Nav_Root extends TUHH_Nav_Item{
+    
+    public function __construct(){
+    }
+    
     public function get_id(){
         return 0;
     }
     
+    public function query_selection(){
+        foreach($this->children as $child){
+            if($child->query_selection()) return true;
+        }
+    }
+
     protected function select_branch(TUHH_Nav_Item $child){
         $this->contains_selected_in = $child;
     }
@@ -261,6 +268,7 @@ class TUHH_Nav_Root extends TUHH_Nav_Item{
 
 class TUHH_WP_Data_Wrapper{
     protected $wp_data;
+    protected $is_parent = false;
     
     public function __construct($wp_data){
         $this->wp_data = $wp_data;
@@ -268,6 +276,10 @@ class TUHH_WP_Data_Wrapper{
 
     public function get_id(){
         return intval($this->wp_data->ID);
+    }
+    
+    public function set_parent(){
+        $this->is_parent = true;
     }
     
     public function is_selected(){
@@ -283,12 +295,19 @@ class TUHH_WP_Data_Wrapper{
     
     public function __toString(){
         $item = $this->wp_data;
+        
+        $classes = array();
+        if($this->is_selected()){
+            $classes[] = 'selected'; }
+        if($this->is_parent){
+            $classes[] = 'parent-of-selected'; }
+        
 		$atts = array();
 		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
 		$atts['target'] = ! empty( $item->target )     ? $item->target     : '';
 		$atts['rel']    = ! empty( $item->xfn )        ? $item->xfn        : '';
 		$atts['href']   = ! empty( $item->url )        ? $item->url        : '';
-		$atts['class']   = $this->is_selected()        ? 'selected'        : '';
+		$atts['class']  = implode(' ', $classes);
 
 		$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args );
 
