@@ -152,16 +152,7 @@ class TUHH_Nav_Item{
         $classes = [];
         if($this->contains_selected_in !== null || $this->is_selected) {
             $classes[] = 'contains-selected'; }
-        return ' class="'.implode(' ', $classes).'" ';
-    }
-
-    protected function item_classes(){
-        $classes = [];
-        if($this->contains_selected_in !== null) {
-            $classes[] = 'parent-of-selected'; }
-        if($this->is_selected){
-            $classes[] = 'selected'; }
-        return ' class="'.implode(' ', $classes).'" ';
+        return implode(' ', $classes);
     }
 
     /////////////////////
@@ -177,22 +168,26 @@ class TUHH_Nav_Item{
     }
 
     protected function render_children(){
-        $out = '';
-        if(count($this->children)){
-            $out .= "<ul".$this->list_classes()." id=\"children-of-".$this->get_id()."\">";
-            foreach($this->children as $child){
-                $out .= $child->render_item();
-            }
-            $out .= "</ul>";
-        }
-        return $out;
+        $children = array_map(function($child){
+            return $child->render_item();
+        }, $this->children);
+        return $this->tag(
+            'ul', 
+            $children,
+            array('id' => "children-of-".$this->get_id(), 'class' => $this->list_classes())
+        );
     }
 
     protected function render_item(){       
-        return "<li".$this->item_classes().">".
-                    $this->render_self().
-                    $this->render_children().
-                "</li>";
+        return $this->tag('li', array($this->render_self(), $this->render_children()));
+    }
+    
+    protected function tag($tag, $children, $attrs = array()){
+        $attr_list = '';
+        foreach($attrs as $name => $value){
+            $attr_list .= sprintf(' %s="%s"', esc_attr($name), esc_attr($value));
+        }
+        return sprintf('<%s%s>%s</%s>', $tag, $attr_list, implode('', $children), $tag);
     }
     
     /////////////////////
@@ -200,7 +195,7 @@ class TUHH_Nav_Item{
     /////////////////////
     
     public function render_top_nav(){
-        return "<li".$this->item_classes().">".$this->render_self()."</li>";
+        return $this->tag('li', array($this->render_self()));
     }
     
     public function render_side_nav(){
@@ -238,19 +233,18 @@ class TUHH_Nav_Root extends TUHH_Nav_Item{
     }
     
     public function render_top_nav(){
-        $out = "";
-        foreach($this->children as $child){
-            $out .= $child->render_top_nav();
-        }
-        return '<nav id="top-navigation" class="main-navigation"><ul data-delegate="sidebar-navigation">'.$out.'</ul></nav>';
+        $children = array_map(function($child){
+            return $child->render_top_nav();
+        }, $this->children);
+        $list = $this->tag('ul', $children, array('data-delegate' => "sidebar-navigation"));
+        return $this->tag('nav', array($list), array('id' => "top-navigation", "class" => "main-navigation"));
     }
 
     public function render_side_nav(){
-        $out = '';
-        foreach($this->children as $child){
-            $out .= $child->render_side_nav();
-        }
-        return '<nav id="sidebar-navigation" class="main-navigation">'.$out.'</nav>';
+        $children = array_map(function($child){
+            return $child->render_side_nav();
+        }, $this->children);
+        return $this->tag('nav', $children, array('id' => "sidebar-navigation", "class" => "main-navigation"));
     }
     
     public function render_breadcrumbs(){
