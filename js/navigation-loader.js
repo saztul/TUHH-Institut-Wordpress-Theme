@@ -13,23 +13,30 @@
   // CACHE
   ////////////
 
-  var cache_key = '_N_C_140627';
+  var _cache_key;
+  var cache_key = function(){
+    if(!_cache_key){
+      _cache_key = $('body').data('cache-key-prefix') || '';
+      _cache_key += '_N_C_140627';
+    }
+    return _cache_key;
+  };
   
   var can_cache = function(){
     return Modernizr.sessionstorage;
   };
   
   var is_cached = function(){
-    return can_cache() && sessionStorage.getItem(cache_key) !== null
+    return can_cache() && sessionStorage.getItem(cache_key()) !== null
   };
 
   var cache_fill = function(callback, update){
     if(can_cache()){
       if(update && typeof update == "string" && update.length > 8){
-        sessionStorage.setItem(cache_key, update);
+        sessionStorage.setItem(cache_key(), update);
       }
       if(callback && typeof callback == "function"){
-        callback(sessionStorage.getItem(cache_key))
+        callback(sessionStorage.getItem(cache_key()))
       }
     }
     else{
@@ -103,7 +110,7 @@
 
   api.clear_navigation_cache = function(){
     if(can_cache()){
-      sessionStorage.removeItem(cache_key)
+      sessionStorage.removeItem(cache_key())
     } 
   };
     
