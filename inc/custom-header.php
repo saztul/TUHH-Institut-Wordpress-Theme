@@ -21,7 +21,7 @@
  * @uses tuhh_institute_header_style()
  * @uses tuhh_institute_admin_header_style()
  * @uses tuhh_institute_admin_header_image()
- */
+ * /
 function tuhh_institute_custom_header_setup() {
 	add_theme_support( 'custom-header', apply_filters( 'tuhh_institute_custom_header_args', array(
 		'default-image'          => '',
@@ -41,7 +41,7 @@ if ( ! function_exists( 'tuhh_institute_header_style' ) ) :
  * Styles the header image and text displayed on the blog
  *
  * @see tuhh_institute_custom_header_setup().
- */
+ * /
 function tuhh_institute_header_style() {
 	$header_text_color = get_header_textcolor();
 
@@ -82,7 +82,7 @@ if ( ! function_exists( 'tuhh_institute_admin_header_style' ) ) :
  * Styles the header image displayed on the Appearance > Header admin panel.
  *
  * @see tuhh_institute_custom_header_setup().
- */
+ * /
 function tuhh_institute_admin_header_style() {
 ?>
 	<style type="text/css">
@@ -110,7 +110,7 @@ if ( ! function_exists( 'tuhh_institute_admin_header_image' ) ) :
  * Custom header image markup displayed on the Appearance > Header admin panel.
  *
  * @see tuhh_institute_custom_header_setup().
- */
+ * /
 function tuhh_institute_admin_header_image() {
 	$style = sprintf( ' style="color:#%s;"', get_header_textcolor() );
 ?>
@@ -124,3 +124,4 @@ function tuhh_institute_admin_header_image() {
 <?php
 }
 endif; // tuhh_institute_admin_header_image
+*/

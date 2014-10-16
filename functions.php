@@ -10,6 +10,9 @@ require get_template_directory() . '/classes/TUHH_Nav_Root.php';
 require get_template_directory() . '/classes/TUHH_Navigation.php';
 require get_template_directory() . '/classes/TUHH_Nav_WP_Data_Wrapper.php';
 
+require get_template_directory() . '/classes/TUHH_Settings.php';
+require get_template_directory() . '/classes/TUHH_Settings_Provider.php';
+$tuhh_conf = TUHH_Settings::get_instance(); 
 
 /**
  * Set the content width based on the theme's design and stylesheet.
@@ -115,27 +118,6 @@ function tuhh_institute_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'tuhh_institute_scripts' );
-
-// function tuhh_breadcrumbs() {
-//     $CPtheFullUrl = $_SERVER["REQUEST_URI"];
-//     $CPurlArray=explode("/",$CPtheFullUrl);
-//     $parts = array();
-//     $parts[] = '<a href="/">Home</a>';
-//     while (list($CPj,$CPtext) = each($CPurlArray)) {
-//         $CPdir='';
-//         if ($CPj > 1) {
-//             $CPi=1;
-//             while ($CPi < $CPj) {
-//                 $CPdir .= '/' . $CPurlArray[$CPi];
-//                 $CPtext = $CPurlArray[$CPi];
-//                 $CPi++;
-//             }
-//             if($CPj < count($CPurlArray)-1) echo ' <a href="'.$CPdir.'">' . str_replace("-", " ", $CPtext) . '</a>';
-//         }
-//     }
-//     // $parts[] = "<span>"; wp_title("")."</span>";
-//     echo implode('path-sep ', $parts);
-// }
 
 function tuhh_top_menu(){
     echo TUHH_Navigation::get_instance()->top_navigation();

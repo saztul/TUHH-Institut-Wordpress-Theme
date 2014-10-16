@@ -19,13 +19,13 @@ class TUHH_Settings {
     
     public static function get_instance(){
         if(!self::$instance){
-            self::$instance = new TIE_Settings;
+            self::$instance = new TUHH_Settings;
         }
         return self::$instance;
     }
     
     public function __construct(){
-        if (is_admin()){
+    	if (is_admin()){
             add_action('admin_init', array($this, 'admin_init'));
             add_action('admin_menu', array($this, 'add_page'));
         }
@@ -49,15 +49,12 @@ class TUHH_Settings {
     }
     
     public function add_page() {
-        // add_options_page('T\\Events', 'T\\Events', 'manage_options', self::SETTINGS_NAME, array($this, 'render_options_page'));
-        add_menu_page(
-            /* page_title */ 'T\\Events',
-            /* menu_title */ 'T\\Events',
-            /* capability */ 'manage_options',
-            /* menu_slug  */ realpath(dirname(__FILE__).'/..').'/views/tie_access_options.php',
-            /* function   */ '',
-            /* icon_url   */ 'dashicons-calendar',
-            /* position   */ 64
+        add_theme_page( 
+        	/* $page_title */ 'TUHH Theme Settings', 
+        	/* $menu_title */ 'TUHH Theme', 
+        	/* $capability */ 'edit_theme_options', 
+        	/* $menu_slug  */ 'tuhh_options', 
+        	/* $function   */ array($this, 'render_options_page') 
         );
     }
     
@@ -74,7 +71,7 @@ class TUHH_Settings {
     ////////////
     
     public function render_options_page(){
-        include(dirname(__FILE__).'/../views/tie_access_options.php');
+        include(dirname(__FILE__).'/../views/tuhh_options.php');
     }
     
     /////////////
