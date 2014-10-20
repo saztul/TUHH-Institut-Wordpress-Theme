@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="tabs.css" type="text/css" media="screen" charset="utf-8">
+  </head>
+  <body id=tievents>
+    
+    <h1>Tab mit Animation</h1>
+    <div class=tab-view data-auto-rotate=30>
+      <div class=tab-group>
+        <div data-title="Aufbau"   class="tab">
+          <h2>Grundlegender Aufbau</h2>
+          <pre>
+&lt;div class=tab-view&gt;
+  &lt;div class=tab-group&gt;
+    &lt;div data-title=&quot;one&quot;   class=&quot;tab&quot;&gt;
+      ...
+    &lt;/div&gt;
+    &lt;div data-title=&quot;two&quot;   class=&quot;tab&quot;&gt;
+      ...
+    &lt;/div&gt;
+    &lt;div data-title=&quot;three&quot; class=&quot;tab&quot;&gt;
+      ...
+  &lt;/div&gt;
+&lt;/div&gt;
+          </pre>
+          <p>Tab &Uuml;berschrifen werden aus dem <code>data-title</code> Attribut generiert.</p>
+        </div>
+        <div data-title="Automatisches Bl&auml;ttern"   class="tab">
+          <h2>Automatisches Bl&auml;ttern</h2>
+          <pre>
+&lt;div class=tab-view data-auto-rotate=30&gt;
+          </pre>
+          <p>Tabs in einem Container mit einem <code>data-auto-rotate</code> Attribut werden automatisch weitergebl&auml;ttert (hier alle <code>30</code> Sekunden).</p>
+          <p>Um das Lesen zu erleichtern, ist das automatische Bl&auml;ttern deaktiviert, wenn die Maus &uuml;ber einem Container positioniert ist. Es werden alle Container auf der Seite pausiert, um die &Uuml;berg&auml;nge synchron zu halten.</p>
+        </div>
+        <div data-title="Start-Tab festlegen" class="tab">
+          <h2>Start-Tab festlegen</h2>
+          <pre>
+&lt;div data-title=&quot;two&quot;   class=&quot;tab default-tab&quot;&gt;
+          </pre>
+          <p>Der Tab der zus&auml;tzlich die Klasse <code>default-tab</code> hat, wird als erstes angezeigt. Wenn es kein <code>default-tab</code> gibt, wird der erste Tab verwendet.</p>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+    <br>
+
+    <h1>Tab ohne Animation</h1>
+    <div class=tab-view>
+      <div class=tab-group>
+        <div data-title="Aufbau"   class="tab">
+          <h2>Grundlegender Aufbau</h2>
+          <pre>
+&lt;div class=tab-view&gt;
+  &lt;div class=tab-group&gt;
+    &lt;div data-title=&quot;one&quot;   class=&quot;tab&quot;&gt;
+      ...
+    &lt;/div&gt;
+    &lt;div data-title=&quot;two&quot;   class=&quot;tab&quot;&gt;
+      ...
+    &lt;/div&gt;
+    &lt;div data-title=&quot;three&quot; class=&quot;tab&quot;&gt;
+      ...
+  &lt;/div&gt;
+&lt;/div&gt;
+          </pre>
+          <p>Tab &Uuml;berschrifen werden aus dem <code>data-title</code> Attribut generiert.</p>
+        </div>
+        <div data-title="Automatisches Bl&auml;ttern"   class="tab">
+          <h2>Automatisches Bl&auml;ttern</h2>
+          <pre>
+&lt;div class=tab-view data-auto-rotate=30&gt;
+          </pre>
+          <p>Tabs in einem Container mit einem <code>data-auto-rotate</code> Attribut werden automatisch weitergebl&auml;ttert (hier alle <code>30</code> Sekunden).</p>
+          <p>Um das Lesen zu erleichtern, ist das automatische Bl&auml;ttern deaktiviert, wenn die Maus &uuml;ber einem Container positioniert ist. Es werden alle Container auf der Seite pausiert, um die &Uuml;berg&auml;nge synchron zu halten.</p>
+        </div>
+        <div data-title="Start-Tab festlegen" class="tab">
+          <h2>Start-Tab festlegen</h2>
+          <pre>
+&lt;div data-title=&quot;two&quot;   class=&quot;tab default-tab&quot;&gt;
+          </pre>
+          <p>Der Tab der zus&auml;tzlich die Klasse <code>default-tab</code> hat, wird als erstes angezeigt. Wenn es kein <code>default-tab</code> gibt, wird der erste Tab verwendet.</p>
+        </div>
+      </div>
+    </div>
+    
+    
+    <script src="jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="tabs.js" type="text/javascript" charset="utf-8"></script>
+  </body>
+</html>

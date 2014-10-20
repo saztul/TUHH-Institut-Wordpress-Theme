@@ -1,0 +1,110 @@
+.tuhh-tabs .activated.tab-view{
+/*  width: 900px;*/
+  position:relative;
+  height: 600px;
+}
+@media screen and (min-height: 900px){
+  .tuhh-tabs .activated.tab-view{
+    height: 700px;
+  }  
+}
+@media screen and (min-height: 1000px){
+  .tuhh-tabs .activated.tab-view{
+    height: 800px;
+  }  
+}
+@media screen and (min-height: 1100px){
+  .tuhh-tabs .activated.tab-view{
+    height: 900px;
+  }  
+}
+@media screen and (min-height: 1200px){
+  .tuhh-tabs .activated.tab-view{
+    height: 1000px;
+  }  
+}
+.tuhh-tabs .tab-view input[type=text],
+.tuhh-tabs .tab-view textarea{
+	width: 320px;
+}
+.tuhh-tabs .activated.tab-view.has-pause-button .pause-button{
+  position: absolute;
+  top:0px;
+  right: auto;
+  bottom:auto;
+  left:0px;
+  width: 45px;
+  height: 45px;
+}
+.tuhh-tabs .activated.tab-view .pause-button.paused{
+  background: url('play-pause-button-sprite.png') 100% 0% no-repeat;
+}
+.tuhh-tabs .activated.tab-view .pause-button.playing{
+  background: url('play-pause-button-sprite.png') 0% 0% no-repeat;
+}
+
+.tuhh-tabs .activated.tab-view .tab-group{
+  background: #F5F5F5;
+  border: 1px solid #E5E5E5;
+  position: absolute;
+  top: 25px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  z-index: 1;
+  overflow: auto;
+}
+.tuhh-tabs .activated.tab-view .tab{
+  display:none;
+  padding: 20px;
+}
+.tuhh-tabs .activated.tab-view .default-tab{
+  display:block;
+}
+.tuhh-tabs .activated.tab-view .tab-header{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: auto;
+  left: 0px;
+  z-index: 2;
+  height: 25px;
+}
+.tuhh-tabs .activated.tab-view.has-pause-button .tab-header{
+  left: 45px;
+}
+.tuhh-tabs .activated.tab-view .tab-header a{
+  line-height: 45px;
+  display: block;
+  height: 24px;
+  padding: 0px 8px;
+  float:left;
+  text-align:center;
+  text-decoration:none;
+  color: black;
+  border-top: 1px solid #E5E5E5;
+  border-right: 1px solid #E5E5E5;
+  margin-right: 5px;
+  font: 13px "Open Sans",sans-serif;
+  line-height: 24px;
+  background: #EBEBEB;
+  border-left: 1px solid #E5E5E5;
+  color: #555;
+  cursor: pointer !important;
+}
+.tuhh-tabs .activated.tab-view .tab-header a:hover{
+  background:#FFFFFF;
+  color:#2ea2cc;
+  cursor: pointer !important;
+}
+.tuhh-tabs .activated.tab-view .tab-header a.active{
+  background: #F5F5F5;
+  border-bottom: 1px solid #F5F5F5;
+  color: #555;
+}
+.tuhh-tabs .activated.tab-view .tab-header a:first-child{
+  border-left: 1px solid #E5E5E5;
+}
+.tuhh-tabs .activated.tab-view .tab-header a:active{
+  outline: none;
+}

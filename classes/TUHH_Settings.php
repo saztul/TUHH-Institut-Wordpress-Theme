@@ -6,14 +6,37 @@ class TUHH_Settings {
     private static $instance;
     protected $option_name = self::OPTION_NAME;
     protected $data = array(
-        'api_key' => 'abc',
-        'client_id' => '1',
-        'site_id' => '2',
-        'param_name' => 'event',
-        'cache' => '0',
-        'list_template' => '',
-        'detail_template' => '',
-        'calendar_template' => ''
+    	// Header
+		'header_collapse_on_front_page' => '',
+		'header_collapse_on_other_pages' => '',
+		'header_background_color' => '',
+    	'header_text_color' => '',
+    	'header_institute_logo' => '',
+    	'header_url_of_german_website' => '',
+    	'header_url_of_english_website' => '',
+        
+		// Search
+        // 'search_use_google' => '',
+        // 'search_custom_serach_code' => '',
+
+    	// Breadcrumbs
+    	'breadcrumb_root_element_title' => '',
+    	'breadcrumb_separator_color' => '',
+
+    	// Body
+    	'body_link_color' => '',
+    	'body_link_hover_color' => '',
+    	
+    	// Footer
+    	'footer_address' => '',
+    	'footer_social_facebook_url' => '',
+    	'footer_social_twitter_url' => '',
+    	'footer_social_google_plus_url' => '',
+    	'footer_social_flickr_url' => '',
+    	'footer_social_youtube_url' => '',
+    	'footer_feed_url' => '',
+    	'footer_imprint_url' => '',
+    	'footer_intranet_url' => ''
     );
     protected $options;
     
@@ -22,6 +45,10 @@ class TUHH_Settings {
             self::$instance = new TUHH_Settings;
         }
         return self::$instance;
+    }
+    
+    public static function name($name){
+        return TUHH_Settings::SETTINGS_NAME."[".$name."]";
     }
     
     public function __construct(){
@@ -71,6 +98,14 @@ class TUHH_Settings {
     ////////////
     
     public function render_options_page(){
+    	if (is_admin()){
+    		wp_register_style( 'tuhh-tab-css-style', get_template_directory_uri().'/vendor/TUHH-Tabs/tabs.css', array(), '2014-10-17-11-55');
+    		wp_enqueue_style( 'tuhh-tab-css-style' );
+    		wp_enqueue_script( 'tie-tab', get_template_directory_uri().'/vendor/TUHH-Tabs/tabs.js', array(), '2014-08-07-15-38', true);
+    	
+    	}
+    	wp_enqueue_style( 'wp-color-picker' );          
+        wp_enqueue_script( 'wp-color-picker' );    
         include(dirname(__FILE__).'/../views/tuhh_options.php');
     }
     
