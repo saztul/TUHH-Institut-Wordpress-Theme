@@ -11,7 +11,7 @@ require get_template_directory() . '/classes/TUHH_Navigation.php';
 require get_template_directory() . '/classes/TUHH_Nav_WP_Data_Wrapper.php';
 
 require get_template_directory() . '/classes/TUHH_Settings.php';
-require get_template_directory() . '/classes/TUHH_Settings_Provider.php';
+require get_template_directory() . '/classes/TUHH_Institut.php';
 $tuhh_conf = TUHH_Settings::get_instance(); 
 
 /**

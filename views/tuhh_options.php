@@ -123,10 +123,14 @@ function wptuts_setting_logo() {
 			            <td><?php tuhh_text_area('footer_address'); ?></td>
 			            </tr>
 						<tr valign="top">
+			            <th scope="row"><label for="tuhh_footer_contact">Kontakt</label></th>
+			            <td><?php tuhh_text_field('footer_contact'); ?></td>
+			            </tr>
+			            <tr valign="top">
 			            <th scope="row"><label for="tuhh_footer_imprint_url">Impressum</label></th>
 			            <td><?php tuhh_text_field('footer_imprint_url'); ?></td>
 			            </tr>
-                    	<tr valign="top">
+			            <tr valign="top">
 			            <th scope="row"><label for="tuhh_footer_intranet_url">Intranet</label></th>
 			            <td><?php tuhh_text_field('footer_intranet_url'); ?></td>
 		            	</tr>

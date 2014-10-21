@@ -15,10 +15,6 @@ class TUHH_Settings {
     	'header_url_of_german_website' => '',
     	'header_url_of_english_website' => '',
         
-		// Search
-        // 'search_use_google' => '',
-        // 'search_custom_serach_code' => '',
-
     	// Breadcrumbs
     	'breadcrumb_root_element_title' => '',
     	'breadcrumb_separator_color' => '',
@@ -29,6 +25,7 @@ class TUHH_Settings {
     	
     	// Footer
     	'footer_address' => '',
+    	'footer_contact' => '',
     	'footer_social_facebook_url' => '',
     	'footer_social_twitter_url' => '',
     	'footer_social_google_plus_url' => '',
@@ -77,7 +74,7 @@ class TUHH_Settings {
     
     public function add_page() {
         add_theme_page( 
-        	/* $page_title */ 'TUHH Theme Settings', 
+        	/* $page_title */ 'TUHH Theme Einstellungen', 
         	/* $menu_title */ 'TUHH Theme', 
         	/* $capability */ 'edit_theme_options', 
         	/* $menu_slug  */ 'tuhh_options', 
@@ -102,7 +99,6 @@ class TUHH_Settings {
     		wp_register_style( 'tuhh-tab-css-style', get_template_directory_uri().'/vendor/TUHH-Tabs/tabs.css', array(), '2014-10-17-11-55');
     		wp_enqueue_style( 'tuhh-tab-css-style' );
     		wp_enqueue_script( 'tie-tab', get_template_directory_uri().'/vendor/TUHH-Tabs/tabs.js', array(), '2014-08-07-15-38', true);
-    	
     	}
     	wp_enqueue_style( 'wp-color-picker' );          
         wp_enqueue_script( 'wp-color-picker' );    
@@ -133,24 +129,10 @@ class TUHH_Settings {
         return sanitize_text_field($input);
     }
     
-    protected function sanitize_list_template($input){
-        return $input;
+    protected function sanitize_footer_address($input){
+    	$lines = explode("\n", $input);
+    	$lines = array_map(array($this, 'sanitize'), $lines);
+    	return implode("\n", $lines);
     }
     
-    protected function sanitize_detail_template($input){
-        return $input;
-    }
-    
-    protected function validate_api_key($new_value, $old_value){
-        if(empty($new_value) || !preg_match('/^[a-z0-9]+$/i', $new_value)){
-            add_settings_error(
-                'api_key',                     // Setting title
-                'apikey_texterror',            // Error ID
-                'Please enter a valid API-Key',// Error message
-                'error'                         // Type of message
-            );
-            return $old_value;
-        }
-        else return $new_value;
-    }
 }
