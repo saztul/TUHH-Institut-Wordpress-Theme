@@ -42,14 +42,19 @@ function tuhh_checkbox($name){
             'value="1" />';
 }
 
-function wptuts_setting_logo() {
-	$wptuts_options = get_option( 'theme_wptuts_options' );
-	?>
-        <input type="text" id="logo_url" name="theme_wptuts_options[logo]" value="<?php echo esc_url( $wptuts_options['logo'] ); ?>" />
-        <input id="upload_logo_button" type="button" class="button" value="<?php _e( 'Upload Logo', 'wptuts' ); ?>" />
-        <span class="description"><?php _e('Upload an image for the banner.', 'wptuts' ); ?></span>
-    <?php
+function tuhh_upload($name){
+	$TUHH_Settings = TUHH_Settings::get_instance();
+	$option_name = $TUHH_Settings->option_name();
+	$fname = $option_name.'['.$name.']';
+	
+	echo '<label for="upload_image">'.
+			'<input class="tuhh_upload" type="text" size="36" name="'.$fname.'" value="'.esc_attr( $TUHH_Settings->option($name) ).'" />'.
+			'<input class="tuhh_upload_button button" type="button" value="Upload Image" />'.
+			'<br />Geben Sie eine URL ein oder laden Sie ein Bild hoch'.
+			'</label>';
+
 }
+
 ?>
 <div class="wrap tuhh-tabs">
     <?php screen_icon(); ?>
@@ -63,6 +68,10 @@ function wptuts_setting_logo() {
                 <div data-title="Kopfzeile" class="tab">
                     <h3>Kopfzeile:</h3>
 			        <table class="form-table">
+			        <tr valign="top">
+			            <th scope="row"><label>Institutslogo</label></th>
+			            <td><?php tuhh_upload("header_institute_logo")?></td>
+						</tr>
 			            <tr valign="top">
 			            <th scope="row"><label for="tuhh_header_collapse_on_front_page">Auf der Startseite einklappen</label></th>
 			            <td><?php tuhh_checkbox('header_collapse_on_front_page'); ?></td>
@@ -79,17 +88,9 @@ function wptuts_setting_logo() {
 			            <th scope="row"><label for="tuhh_header_text_color">Textfarbe</label></th>
 			            <td><?php tuhh_color_field('header_text_color'); ?></td>
 			            </tr>
-			            <tr valign="top">
-			            <th scope="row"><label for="tuhh_header_url_of_german_website">Adresse der deutschen Webseite</label></th>
-			            <td><?php tuhh_text_field('header_url_of_german_website'); ?></td>
-			            </tr>
-			            <tr valign="top">
-			            <th scope="row"><label for="tuhh_header_url_of_english_website">Adresse der englischen Webseite</label></th>
-			            <td><?php tuhh_text_field('header_url_of_english_website'); ?></td>
-			            </tr>
 			            </table>
                     </div>
-            	<div data-title="Brotkrumennavigation" class="tab">
+            	<div data-title="Navigation" class="tab">
                     <h3>Brotkrumennavigation:</h3>
 			        <table class="form-table">
 			            <tr valign="top">
@@ -100,7 +101,18 @@ function wptuts_setting_logo() {
 			            <th scope="row"><label for="tuhh_breadcrumb_separator_color">Farbe des Pfadtrenners</label></th>
 			            <td><?php tuhh_color_field('breadcrumb_separator_color'); ?></td>
 			            </tr>
-                    </table>
+		            </table>
+                    <h3>Sprachen:</h3>
+		            <table class="form-table">
+			            <tr valign="top">
+			            <th scope="row"><label for="tuhh_header_url_of_german_website">Adresse der deutschen Webseite</label></th>
+			            <td><?php tuhh_text_field('header_url_of_german_website'); ?></td>
+			            </tr>
+			            <tr valign="top">
+			            <th scope="row"><label for="tuhh_header_url_of_english_website">Adresse der englischen Webseite</label></th>
+			            <td><?php tuhh_text_field('header_url_of_english_website'); ?></td>
+			            </tr>
+		            </table>
                 </div>
             	<div data-title="Inhalt" class="tab">
                     <h3>Inhalt:</h3>

@@ -95,10 +95,12 @@ class TUHH_Settings {
     ////////////
     
     public function render_options_page(){
-    	if (is_admin()){
+    	if (is_admin()){ //isset($_GET['page']) && $_GET['page'] == 'my_plugin_page'
+    		wp_enqueue_media();
     		wp_register_style( 'tuhh-tab-css-style', get_template_directory_uri().'/vendor/TUHH-Tabs/tabs.css', array(), '2014-10-17-11-55');
     		wp_enqueue_style( 'tuhh-tab-css-style' );
-    		wp_enqueue_script( 'tie-tab', get_template_directory_uri().'/vendor/TUHH-Tabs/tabs.js', array(), '2014-08-07-15-38', true);
+    		wp_enqueue_script( 'tuhh-tab', get_template_directory_uri().'/vendor/TUHH-Tabs/tabs.js', array('jquery'), '2014-08-07-15-38', true);
+    		wp_enqueue_script( 'tuhh-settings', get_template_directory_uri().'/js/wp-options.js', array('jquery'), '2014-08-07-15-38', true);
     	}
     	wp_enqueue_style( 'wp-color-picker' );          
         wp_enqueue_script( 'wp-color-picker' );    
