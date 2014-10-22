@@ -1,12 +1,12 @@
 <?php
-class TUHH_Institut{
+class TUHH_Institute{
 	
 	protected static $instance;
 	protected $options;
 	
 	public static function config(){
 		if(!self::$instance){
-			self::$instance = new TUHH_Institut();
+			self::$instance = new TUHH_Institute();
 		}
 		return self::$instance;
 	}

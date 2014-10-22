@@ -50,7 +50,7 @@
         </a>
         <a href="<?php echo get_option('home'); ?>" title="Zur Startseite">
           <h1>
-            <img id="inst-logo" src="<?php echo get_header_image(); ?>">
+            <img id="inst-logo" src="<?php echo TUHH_Institute::config()->institute_logo(); ?>">
             <span id="backflip">
               <span style="color: #<?php echo get_header_textcolor(); ?>;"><?php bloginfo('name'); ?></span>
             </span>

@@ -6,7 +6,7 @@
  *
  * @package TUHH Institute
  */
-$config = TUHH_Institut::config();
+$config = TUHH_Institute::config();
 ?>
     </div>
     <div class="footer-bumper"></div>
