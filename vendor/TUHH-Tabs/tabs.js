@@ -1,5 +1,11 @@
 (function(Api, $){
   
+  var remember = function(view, tab){
+	  if(view.data('remember-as') && sessionStorage && sessionStorage.setItem){
+		  sessionStorage.setItem(view.data('remember-as'), tab);
+	  }
+  };
+	
   // handle tab selection
   var click_handler = function(e){
     var clicked = $(this);
@@ -8,6 +14,7 @@
     view.find('.default-tab').removeClass('default-tab');
     view.find('.tab').hide();
     view.find('.tab:nth-child('+clicked.data('tab')+')').show();
+    remember(view, clicked.data('tab'));
     // select header
     view.find('.tab-header a').removeClass('active');
     clicked.addClass('active');
@@ -17,14 +24,21 @@
   
   // create html for tabs
   var build_tab_view = function(view){
+	var remembered = 0;
+	var view_name = view.data('remember-as');
+    if(view_name && sessionStorage && sessionStorage.getItem){
+    	var remembered = sessionStorage.getItem(view_name);
+    }
     var header = $('<div class=tab-header/>')
     view.find('.tab').each(function(i, e){
       var tab = $('<a href="#"/>').
                 text($(e).data('title')).
                 attr('data-tab', 1+i).
                 click(click_handler);
-      if($(e).hasClass('default-tab')){
+      if(remembered == 0 && $(e).hasClass('default-tab')){
         tab.addClass('active');
+      }else if(remembered == i+1){
+    	tab.addClass('active');
       }
       header.append(tab);
     });

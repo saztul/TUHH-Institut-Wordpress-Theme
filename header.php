@@ -70,10 +70,7 @@
           <input type="text" id="search-field"><input type="submit" value="Suchen" id="search-submit">
         </form>
         <nav id="language-switch">
-          <span>
-            <a href="/">DE</a> |
-            <a href="#EN">EN</a>
-          </span>
+        	<?php echo TUHH_Institute::config()->language_switch(); ?>
         </nav>
         <a class=anchor name="top-navigation" title="Hauptnavigation"></a>
         <?php tuhh_top_menu(); ?>

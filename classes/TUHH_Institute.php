@@ -18,7 +18,14 @@ class TUHH_Institute{
     protected function option($name){
         return isset($this->options[$name]) ? $this->options[$name] : '';
     }
-
+    
+    protected function link($url, $title){
+    	if(empty($url)){ return ''; }
+    	if(!substr($url,0,1) == '#' && strpos($url, '://') === false){ $url = 'http://'.$url; }
+    	return sprintf('<a href="%s" target="_blank">%s</a>', $url, $title);
+    }
+    
+    
     //Header
 
 	public function collapse_header_on_front_page(){
@@ -41,6 +48,8 @@ class TUHH_Institute{
     	return $this->option('header_institute_logo');
     }
     
+    // Navigation
+    
     public function url_of_german_website(){
     	return $this->option('header_url_of_german_website');
     }
@@ -49,7 +58,23 @@ class TUHH_Institute{
     	return $this->option('header_url_of_english_website');
     }
     
-    // Breadcrumbs
+    public function language_switch(){
+    	$de = $this->url_of_german_website();
+    	$en = $this->url_of_english_website();
+    	$out = '';
+    	if(!empty($de) && !empty($en)){
+    		$out .= "<span>";
+    		$out .= $this->link($de, 'DE');
+    		$out .= " | ";
+    		$out .= $this->link($en, 'EN');
+    		$out .= "</span>";
+    	}
+    	return $out;
+    }
+    
+ 	public function use_megamenu(){
+    	return $this->option('navigation_by_megamenu');
+ 	}
     
     public function breadcrumb_root_element_title(){
     	return $this->option('breadcrumb_root_element_title');
@@ -70,12 +95,6 @@ class TUHH_Institute{
     }
     
     // Footer
-    
-    protected function link($url, $title){
-    	if(empty($url)){ return ''; }
-    	if(strpos($url, '://') === false){ $url = 'http://'.$url; }
-    	return sprintf('<a href="%s" target="_blank">%s</a>', $url, $title);
-    }
     
 	public function address(){
     	return $this->option('footer_address');

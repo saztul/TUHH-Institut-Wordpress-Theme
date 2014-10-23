@@ -12,13 +12,14 @@ class TUHH_Settings {
 		'header_background_color' => '',
     	'header_text_color' => '',
     	'header_institute_logo' => '',
-    	'header_url_of_german_website' => '',
-    	'header_url_of_english_website' => '',
         
-    	// Breadcrumbs
+    	// Navigation
+    	'navigation_by_megamenu' => '',
     	'breadcrumb_root_element_title' => '',
     	'breadcrumb_separator_color' => '',
-
+    	'header_url_of_german_website' => '',
+    	'header_url_of_english_website' => '',
+    		
     	// Body
     	'body_link_color' => '',
     	'body_link_hover_color' => '',

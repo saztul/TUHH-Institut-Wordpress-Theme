@@ -63,7 +63,7 @@ function tuhh_upload($name){
 		<?php settings_fields( TUHH_Settings::SETTINGS_NAME ); ?>
     	<?php do_settings_sections( TUHH_Settings::SETTINGS_NAME ); ?>
     	
-    	<div class=tab-view>
+    	<div class=tab-view data-remember-as=tuhh-options>
             <div class=tab-group>
                 <div data-title="Kopfzeile" class="tab">
                     <h3>Kopfzeile:</h3>
