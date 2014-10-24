@@ -1,7 +1,21 @@
 .tuhh-tabs .activated.tab-view{
-/*  width: 900px;*/
   position:relative;
   height: 600px;
+}
+@media screen and (min-height: 1px){
+  .tuhh-tabs .activated.tab-view{
+    height: 300px;
+  }  
+}
+@media screen and (min-height: 600px){
+  .tuhh-tabs .activated.tab-view{
+    height: 400px;
+  }  
+}
+@media screen and (min-height: 700px){
+  .tuhh-tabs .activated.tab-view{
+    height: 500px;
+  }  
 }
 @media screen and (min-height: 900px){
   .tuhh-tabs .activated.tab-view{
@@ -15,12 +29,12 @@
 }
 @media screen and (min-height: 1100px){
   .tuhh-tabs .activated.tab-view{
-    height: 900px;
+/*     height: 900px; */
   }  
 }
 @media screen and (min-height: 1200px){
   .tuhh-tabs .activated.tab-view{
-    height: 1000px;
+    /* height: 1000px; */
   }  
 }
 .tuhh-tabs .tab-view input[type=text],
