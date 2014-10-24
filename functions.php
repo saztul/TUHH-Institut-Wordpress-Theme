@@ -10,6 +10,9 @@ require get_template_directory() . '/classes/TUHH_Nav_Root.php';
 require get_template_directory() . '/classes/TUHH_Navigation.php';
 require get_template_directory() . '/classes/TUHH_Nav_WP_Data_Wrapper.php';
 
+require get_template_directory() . '/classes/TUHH_Teaser_Settings.php';
+$tuhh_teaser_conf = TUHH_Teaser_Settings::get_instance();
+
 require get_template_directory() . '/classes/TUHH_Settings.php';
 require get_template_directory() . '/classes/TUHH_Institute.php';
 $tuhh_conf = TUHH_Settings::get_instance(); 

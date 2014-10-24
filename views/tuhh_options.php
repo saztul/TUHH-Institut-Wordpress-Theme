@@ -21,6 +21,17 @@ function tuhh_text_field($name){
             'value="'.esc_attr( $TUHH_Settings->option($name) ).'" />';
 }
 
+function tuhh_number_field($name, $step = 1, $min = 1){
+	$TUHH_Settings = TUHH_Settings::get_instance();
+	$option_name = $TUHH_Settings->option_name();
+	echo '<input type="number" '.
+            'step="'.esc_attr( $step ).'" '.
+            'min="'.esc_attr( $min ).'" '.
+            'name="'.$option_name.'['.$name.']" '. 
+            'id="tuhh_'.$name.'" '.
+            'value="'.esc_attr( $TUHH_Settings->option($name) ).'" />';
+}
+
 function tuhh_text_area($name){
 	$TUHH_Settings = TUHH_Settings::get_instance();
 	$option_name = $TUHH_Settings->option_name();
@@ -114,7 +125,24 @@ function tuhh_upload($name){
 			            </tr>
 		            </table>
                 </div>
-            	<div data-title="Inhalt" class="tab">
+            	<div data-title="Teaser" class="tab">
+                    <h3>Teaser:</h3>
+			        <table class="form-table">
+			            <tr valign="top">
+			            <th scope="row"><label for="tuhh_teaser_show_on_front_page">Auf der Startseite anzeigen</label></th>
+			            <td><?php tuhh_checkbox('teaser_show_on_front_page'); ?></td>
+			            </tr>
+			        	<tr valign="top">
+			            <th scope="row"><label for="tuhh_teaser_show_on_other_pages">Auf anderen Seiten anzeigen</label></th>
+			            <td><?php tuhh_checkbox('teaser_show_on_other_pages'); ?></td>
+			            </tr>
+			        	<tr valign="top">
+			            <th scope="row"><label for="tuhh_teaser_cycle_speed">Blättergeschwindigkeit (in Sekunden)</label></th>
+			            <td><?php tuhh_number_field('teaser_cycle_speed'); ?></td>
+			            </tr>
+		            </table>
+                </div>
+			    <div data-title="Inhalt" class="tab">
                     <h3>Inhalt:</h3>
 			        <table class="form-table">
 			            <tr valign="top">

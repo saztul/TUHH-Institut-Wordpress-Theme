@@ -31,17 +31,19 @@
     }
     var header = $('<div class=tab-header/>')
     view.find('.tab').each(function(i, e){
+      var tab_content = $(e);
+      tab_content.hide();
       var tab = $('<a href="#"/>').
-                text($(e).data('title')).
+                text(tab_content.data('title')).
                 attr('data-tab', 1+i).
                 click(click_handler);
-      if(remembered == 0 && $(e).hasClass('default-tab')){
+      if((remembered == null && $(e).hasClass('default-tab')) || (remembered == i+1)){
         tab.addClass('active');
-      }else if(remembered == i+1){
-    	tab.addClass('active');
+        tab_content.show();
       }
       header.append(tab);
     });
+    
     view.prepend(header);
   };
   
