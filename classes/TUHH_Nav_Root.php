@@ -66,11 +66,23 @@ class TUHH_Nav_Root extends TUHH_Nav_Item{
      * @return string
      */
     public function render_breadcrumbs(){
-        $crumbs = array();
+        $crumbs = array($this->render_self());
         if($this->contains_selected_in !== null){
-            $crumbs = $this->contains_selected_in->render_breadcrumbs();
+            $crumbs = $this->contains_selected_in->render_breadcrumbs($crumbs);
         }
         return implode('<span class="path-sep"> &gt; </span>', $crumbs);
+    }
+    
+    /**
+     * Render root element
+     * @return string
+     */
+    protected function render_self(){
+        return sprintf(
+            '<a href="%s">%s</a>',
+            site_url(),
+            TUHH_Institute::config()->breadcrumb_root_element_title()
+        );
     }
     
     /**
