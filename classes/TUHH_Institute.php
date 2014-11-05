@@ -48,6 +48,25 @@ class TUHH_Institute{
     	return $this->option('header_institute_logo');
     }
     
+    // Teaser
+    
+	public function show_teaser_on_front_page(){
+    	return $this->option('teaser_show_on_front_page');
+    }
+    
+    public function show_teaser_on_other_pages(){
+    	return $this->option('teaser_show_on_other_pages');
+    }
+    
+    public function teaser_cycle_speed(){
+    	return $this->option('teaser_cycle_speed');
+    }
+    
+    public function teaser_default_image(){
+    	return $this->option('teaser_default_image');
+    }
+    
+    
     // Navigation
     
     public function url_of_german_website(){

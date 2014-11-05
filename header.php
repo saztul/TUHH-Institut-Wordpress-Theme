@@ -76,4 +76,4 @@
         <?php tuhh_top_menu(); ?>
       </section>
     
-    
+    <?php tuhh_teaser_section(); ?>

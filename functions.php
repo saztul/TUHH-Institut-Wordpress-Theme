@@ -11,6 +11,7 @@ require get_template_directory() . '/classes/TUHH_Navigation.php';
 require get_template_directory() . '/classes/TUHH_Nav_WP_Data_Wrapper.php';
 
 require get_template_directory() . '/classes/TUHH_Teaser_Settings.php';
+require get_template_directory() . '/classes/TUHH_Teaser.php';
 $tuhh_teaser_conf = TUHH_Teaser_Settings::get_instance();
 
 require get_template_directory() . '/classes/TUHH_Settings.php';
@@ -105,7 +106,7 @@ add_action( 'widgets_init', 'tuhh_institute_widgets_init' );
  */
 function tuhh_institute_scripts() {
 	wp_enqueue_style( 'tuhh-institute-style', get_stylesheet_uri() );
-	wp_enqueue_style( 'tuhh-institute-imported-style', get_template_directory_uri() . '/static/application-da92feeab726f7664b36f44894a37c53.css' );
+	wp_enqueue_style( 'tuhh-institute-imported-style', get_template_directory_uri() . '/static/application-0101ff9dcf2852d3559e0b903c5e46d2.css' );
 
     wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/static/assets/modernizr.js', array(), '20140815', true );
     wp_enqueue_script( 'tuhh-jquery-next-or-first', get_template_directory_uri() . '/js/jQuery_next_or_first.js', array('jquery'), '20140815', true );
@@ -145,12 +146,15 @@ function tuhh_header_style_overwrites(){
     $link = esc_attr($conf->link_color());
     $link_hover = esc_attr($conf->link_hover_color());
     
+    $teaser_default = esc_attr($conf->teaser_default_image());
+    
     echo '<style type="text/css">'."\n";
     if($bc_color)   { echo "#content-frame #breadcrumb .path-sep{ color: $bc_color; }\n"; }
     if($header_text){ echo "#page-header h1{ color: $header_text; }\n"; }
     if($header_bg)  { echo "#page-header{ background-color: $header_bg; }\n"; }
     if($link)       { echo "#content-frame a, #sidebar a{ color: $link; }\n"; }
     if($link_hover) { echo "#content-frame a:hover, #sidebar a:hover, #page-footer a:hover{ color: $link_hover; }\n"; }
+    if($teaser_default) { echo "#teaser-bar #teaser{ background-image: url($teaser_default); }\n"; }
     echo "</style>\n";
 }
 add_action('wp_head', 'tuhh_header_style_overwrites');
@@ -167,6 +171,17 @@ function tuhh_fold_header_classes($classes = ''){
     return $classes;
 }
 add_filter( 'body_class', 'tuhh_fold_header_classes' );
+
+function tuhh_teaser_section(){
+    $conf = TUHH_Institute::config();
+    if(
+        (is_front_page() && $conf->show_teaser_on_front_page())
+        or
+        (!is_front_page() && $conf->show_teaser_on_other_pages())
+    ){
+        echo TUHH_Teaser::run();
+    }
+}
 
 /**
  * Implement the Custom Header feature.
