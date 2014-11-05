@@ -61,6 +61,14 @@ $tuhh_ui = new TUHH_UI(TUHH_Settings::get_instance());
 			            <td><?php $tuhh_ui->text_field('header_url_of_english_website'); ?></td>
 			            </tr>
 		            </table>
+		            <br><br>
+                    <h3>Mega-Menü:</h3>
+			        <table class="form-table">
+			            <tr valign="top">
+			            <th scope="row"><label for="tuhh_navigation_by_megamenu">Mega-Menü zum Navigieren verwenden</label></th>
+			            <td><?php $tuhh_ui->checkbox('navigation_by_megamenu'); ?></td>
+			            </tr>
+                    </table>
                 </div>
             	<div data-title="Teaser" class="tab">
                     <h3>Teaser:</h3>

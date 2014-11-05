@@ -1,10 +1,10 @@
 ;(function(api, $){
   api.log = function(){};
-  if(console && console.log){
-    api.log = function(msg){
-      console.log(msg);
-    };
-  }
+  // if(console && console.log){
+  //   api.log = function(msg){
+  //     // console.log(msg);
+  //   };
+  // }
 })(window, jQuery);
 
 ;(function(api, $){
@@ -36,7 +36,7 @@
         sessionStorage.setItem(cache_key(), update);
       }
       if(callback && typeof callback == "function"){
-        callback(sessionStorage.getItem(cache_key()))
+        callback(sessionStorage.getItem(cache_key()));
       }
     }
     else{
@@ -64,6 +64,8 @@
         node.after("<ul>" + menu.html() + "</ul>");
       }
     });
+    nav.find('a').removeClass('selected');
+    nav.find('a').removeClass('parent-of-selected');
     load_callback(nav.html());
   };
   
@@ -110,7 +112,7 @@
 
   api.clear_navigation_cache = function(){
     if(can_cache()){
-      sessionStorage.removeItem(cache_key())
+      sessionStorage.removeItem(cache_key());
     } 
   };
     
