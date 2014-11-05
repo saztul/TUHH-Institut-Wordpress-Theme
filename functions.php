@@ -137,7 +137,36 @@ function tuhh_breadcrumbs(){
     echo TUHH_Navigation::get_instance()->breadcrumbs();
 }
 
+function tuhh_header_style_overwrites(){
+    $conf = TUHH_Institute::config();
+    $bc_color = esc_attr($conf->breadcrumb_separator_color());
+    $header_text = esc_attr($conf->header_text_color());
+    $header_bg = esc_attr($conf->header_background_color());
+    $link = esc_attr($conf->link_color());
+    $link_hover = esc_attr($conf->link_hover_color());
+    
+    echo '<style type="text/css">'."\n";
+    if($bc_color)   { echo "#content-frame #breadcrumb .path-sep{ color: $bc_color; }\n"; }
+    if($header_text){ echo "#page-header h1{ color: $header_text; }\n"; }
+    if($header_bg)  { echo "#page-header{ background-color: $header_bg; }\n"; }
+    if($link)       { echo "#content-frame a, #sidebar a{ color: $link; }\n"; }
+    if($link_hover) { echo "#content-frame a:hover, #sidebar a:hover, #page-footer a:hover{ color: $link_hover; }\n"; }
+    echo "</style>\n";
+}
+add_action('wp_head', 'tuhh_header_style_overwrites');
 
+function tuhh_fold_header_classes($classes = ''){
+    $conf = TUHH_Institute::config();
+    if(
+        (is_front_page() && $conf->collapse_header_on_front_page())
+        or
+        (!is_front_page() && $conf->collapse_header_on_other_pages())
+    ){
+        $classes[] = "fold-header";
+    }
+    return $classes;
+}
+add_filter( 'body_class', 'tuhh_fold_header_classes' );
 
 /**
  * Implement the Custom Header feature.
