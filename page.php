@@ -19,7 +19,6 @@ get_header(); ?>
         </nav>
         <section id="content">
 			<?php while ( have_posts() ) : the_post(); ?>
-                <article <?php post_class() ?> id="post-<?php the_ID(); ?>">
 				<?php get_template_part( 'content', 'page' ); ?>
 				<?php /*
 					// If comments are open or we have at least one comment, load up the comment template
@@ -27,7 +26,6 @@ get_header(); ?>
 						comments_template();
 					endif;
 				*/ ?>
-            </article>
 			<?php endwhile; // end of the loop. ?>
         </section>
         <aside id="sidebar">

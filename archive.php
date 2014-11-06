@@ -8,10 +8,13 @@
  */
 
 get_header(); ?>
-
-	<section id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-
+    <section id="content-frame">
+        <nav id="breadcrumb">
+            <div>
+            <?php tuhh_breadcrumbs(); ?>
+            </div>
+        </nav>
+        <section id="content">
 		<?php if ( have_posts() ) : ?>
 
 			<header class="page-header">
@@ -98,8 +101,13 @@ get_header(); ?>
 
 		<?php endif; ?>
 
-		</main><!-- #main -->
-	</section><!-- #primary -->
-
-<?php get_sidebar(); ?>
+        </section>
+        <aside id="sidebar">
+            <a class="anchor" name="siedebar" title="Seitenleiste"></a>
+            <br>
+            <?php tuhh_side_menu(); ?>
+            <br>
+            <?php get_sidebar(); ?>
+        </aside>
+    </section>
 <?php get_footer(); ?>
