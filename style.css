@@ -14,3 +14,167 @@ This theme, like WordPress, is licensed under the GPL.
 
 TUHH Institute is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
 */
+
+
+
+/* top right search */
+
+/*#searchsubmit,
+#search-box label span,
+#search-box .search-submit{
+  display: none;
+}
+@media screen{
+  #searchform .screen-reader-text{
+    display: none;
+  }
+}
+*/
+
+/* sidebar */
+
+#sidebar .box>ul{
+  padding:6% 8%;
+  display:block;
+}
+#sidebar .widget_search{
+  display:none;
+}
+
+
+
+/* content stuff */
+#content-frame .entry-footer{
+  padding-top: 1em;
+  color: #aaa;
+}
+#content-frame .entry-meta{
+  display:none;
+}
+
+
+#content-frame .post-navigation{
+  margin-top: 1em;
+  border-top: 1px solid #E4E4E4;
+  padding: 0.5em;
+}
+#content-frame .post-navigation div:last-child:after{
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+#content-frame .post-navigation h1{
+  display:none;
+}
+#content-frame .post-navigation .nav-previous{
+  float: left;
+  width: 49%;
+  overflow: hidden;
+}
+#content-frame .post-navigation .nav-next{
+  float: right;
+  width: 49%;
+  overflow: hidden;
+  text-align: right;
+}
+
+
+#content-frame img, #content-frame figure{
+  max-width: 100% !important;
+  height: auto;
+}
+#content-frame .aligncenter{
+  text-align:center;
+  margin-left: auto;
+  margin-right: auto;
+}
+#content-frame .alignleft{
+  float: left;
+  margin: 0em 1em 1em 0em;
+}
+#content-frame .alignright{
+  float: right;
+  margin: 0em 0em 1em 1em;
+}
+#content-frame figure{
+  background: #F0F0F0;
+  margin: .5em 0em;
+  clear: both;
+  position:relative;
+}
+#content-frame figure img{
+  display:block;
+}
+#content-frame figcaption{
+  padding: .2em .5em;
+  text-align:left;
+  text-overflow: ellipsis;
+}
+/*gallery-columns-3*/
+#content-frame .gallery .gallery-item{
+  width: 30%;
+  margin: 0 5% 5% 0;
+  float: left;
+  clear:none;
+  position:relative;
+}
+#content-frame .gallery .gallery-item:nth-child(3n){
+  margin: 0 0% 0% 0;
+}
+#content-frame .gallery .gallery-item img{
+  width:100%;
+  display:block;
+}
+#content-frame figcaption{
+  height: auto;
+  display:block;
+  overflow:hidden;
+  position: absolute;
+  top: auto;
+  height: 2.6em;
+  right: 0px;
+  bottom:0px;
+  left:0px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+}
+#content-frame figcaption:hover{
+  margin: 0em;
+  display:block;
+  overflow:auto;
+  top: 0px;
+  height:auto;
+}
+
+#content-frame .gallery:after{
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+#content-frame ul.tags{
+  list-style-image: none;
+  margin: 0px 0px 1em 0px;
+  padding:0px;
+}
+#content-frame ul.tags li{
+  display:inline;
+}
+#content-frame ul.tags a{
+  display: inline-block;
+  margin-right: 0.5em;
+  padding: 3px 4px;
+  background: #F0F0F0;
+  color: #888888;
+  text-decoration: none;
+}
+#content-frame ul.tags li a:hover{
+  background: #58BECF;
+  color: white;
+}

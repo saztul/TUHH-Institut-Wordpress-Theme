@@ -15,7 +15,8 @@ $config = TUHH_Institute::config();
 
   <footer id="page-footer">
     <p id="change-info">
-      <?php the_author_link(); ?>, <?php the_modified_date( 'd.m.Y' ); ?>
+        
+      <?php tuhh_institute_posted_on(); ?>
     </p>
     
     <p id="social-links">
