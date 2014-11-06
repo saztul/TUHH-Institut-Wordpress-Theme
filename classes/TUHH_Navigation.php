@@ -46,10 +46,12 @@ class TUHH_Navigation extends Walker{
      * Import data from wordpress
      */
     protected function import_wp_data(){
+        ob_start();
         wp_nav_menu( array(
             'walker'         => $this,
             'theme_location' => 'primary'
         ));
+        ob_end_clean();
     }
     
     /**

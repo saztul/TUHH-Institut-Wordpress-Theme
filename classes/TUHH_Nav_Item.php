@@ -147,7 +147,7 @@ class TUHH_Nav_Item{
      * @return string
      */
     protected function list_classes(){
-        $classes = [];
+        $classes = array();
         if($this->contains_selected_in !== null || $this->is_selected) {
             $classes[] = 'contains-selected'; }
         return implode(' ', $classes);
