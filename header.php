@@ -64,10 +64,10 @@
     
       <section id="navigation-bar">
         <a id="search-link" href="/bitte-url-zur-suche-hier=eintragen" title="Suchformular anzeigen"><img src="<?php echo get_template_directory_uri(); ?>/static/assets/filter.png" alt="Suchformular anzeigen" /></a>
-        <form method="get" action="?" id="search-panel">
+        <form role="search" method="get" action="<?php echo home_url( '/' ) ?>" id="search-panel">
           <a class=anchor name="search" title="Suche"></a>
           <label for="search-field">Webseite durchsuchen</label>
-          <input type="text" id="search-field"><input type="submit" value="Suchen" id="search-submit">
+          <input type="text" id="search-field" name="s"><input type="submit" value="Suchen" id="search-submit">
         </form>
         <nav id="language-switch">
         	<?php echo TUHH_Institute::config()->language_switch(); ?>
