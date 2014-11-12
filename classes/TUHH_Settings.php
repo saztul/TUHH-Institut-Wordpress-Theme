@@ -138,10 +138,12 @@ class TUHH_Settings {
         return sanitize_text_field($input);
     }
     
+    protected function sanitize_footer_contact($input){
+        return $input;
+    }
+    
     protected function sanitize_footer_address($input){
-    	$lines = explode("\n", $input);
-    	$lines = array_map(array($this, 'sanitize'), $lines);
-    	return implode("\n", $lines);
+        return $input;
     }
     
 }

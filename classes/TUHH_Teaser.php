@@ -25,7 +25,7 @@ class TUHH_Teaser{
                 $image,
                 esc_url($this->option("teaser_slide_${nr}_link")),
                 esc_html($this->option("teaser_slide_${nr}_title")),
-                esc_html($this->option("teaser_slide_${nr}_text"))
+                ($this->option("teaser_slide_${nr}_text"))
             );
         }
         else return '';

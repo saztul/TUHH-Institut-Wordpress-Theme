@@ -137,9 +137,7 @@ class TUHH_Teaser_Settings {
     }
     
     protected function sanitize_teaser_slide_text($input){
-    	$lines = explode("\n", $input);
-    	$lines = array_map(array($this, 'sanitize'), $lines);
-    	return implode("\n", $lines);
+        return $input;
     }
     
     protected function sanitize_teaser_slide_1_text($input){
