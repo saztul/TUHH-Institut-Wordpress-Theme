@@ -192,7 +192,7 @@ class TUHH_Nav_Item{
      * Render this node as a list element
      * @return string
      */
-    protected function render_item(){       
+    public function render_item(){       
         return $this->tag('li', array($this->render_self(), $this->render_children()));
     }
     
