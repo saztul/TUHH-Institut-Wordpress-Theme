@@ -83,9 +83,9 @@ class TUHH_Institute{
     	$out = '';
     	if(!empty($de) && !empty($en)){
     		$out .= "<span>";
-    		$out .= $this->link($de, 'DE');
+    		$out .= '<a href="'.esc_attr($de).'">DE</a>';
     		$out .= " | ";
-    		$out .= $this->link($en, 'EN');
+    		$out .= '<a href="'.esc_attr($en).'">EN</a>';
     		$out .= "</span>";
     	}
     	return $out;
